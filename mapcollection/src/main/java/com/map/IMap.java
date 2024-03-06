@@ -1,0 +1,11 @@
+package com.map;
+
+public interface IMap <K, V> {
+    void put(K key, V value);
+    V get(K key);
+    boolean containsKey(K key);
+    boolean containsValue(V value);
+    void remove(K key);
+    boolean isEmpty();
+    
+}
