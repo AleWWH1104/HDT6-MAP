@@ -1,4 +1,4 @@
-package com.map;
+package com.cmap;
 
 public class Main {
     public static void main(String[] args) {
