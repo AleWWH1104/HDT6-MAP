@@ -1,10 +1,11 @@
 package com.cmap;
+import java.util.List;
+import java.util.Map;
 
-public interface IMap <K, V> {
-    void put(K key, V value);
-    V get(K key);
-    void remove(K key);
-    boolean isEmpty();
-    void clear();
-    
+public interface IMap {
+    void addCard(String name, String type);
+    String getCardType(String name);
+    Map<String, Integer> getUserCollection();
+    List<String> getAllCards();
+    List<String> getAllCardsByType();
 }

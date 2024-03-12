@@ -1,36 +1,45 @@
 package com.cmap;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class cTreeMap<K,V> implements IMap<K, V> {
-    private Map<K, V> map;
+public class cTreeMap implements IMap {
+    private Map<String, String> cartas;
+    private Map<String, Integer> userCollection;
 
     public cTreeMap(){
-        map = new TreeMap<>();
+        cartas = new TreeMap<>();
+        userCollection = new HashMap<>();
     }
 
     @Override
-    public void put(K key, V value) {
-        map.put(key, value);
+    public void addCard(String name, String type) {
+        cartas.put(name, type);
+        userCollection.put(name, userCollection.getOrDefault(name, 0) + 1);
     }
 
     @Override
-    public V get(K key) {
-        return map.get(key);
+    public String getCardType(String name) {
+        return cartas.get(name);
     }
 
     @Override
-    public void remove(K key) {
-        map.remove(key);
+    public Map<String, Integer> getUserCollection() {
+        return userCollection;
     }
 
     @Override
-    public boolean isEmpty() {
-        return map.isEmpty();
+    public List<String> getAllCards() {
+        return new ArrayList<>(cartas.keySet());
     }
 
     @Override
-    public void clear() {
-        map.clear();    
+    public List<String> getAllCardsByType() {
+        List<String> sortedCards = new ArrayList<>(cartas.keySet());
+        sortedCards.sort(Comparator.comparing(cartas::get));
+        return sortedCards;
     }
 }

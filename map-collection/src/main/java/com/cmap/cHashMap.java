@@ -1,37 +1,45 @@
 package com.cmap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
-public class cHashMap <K, V> implements IMap<K, V> {
-    private Map<K, V> map;
+public class cHashMap implements IMap{
+    private Map<String, String> cartas;
+    private Map<String, Integer> userCollection;
 
     public cHashMap(){
-        map = new HashMap<>();
+        cartas = new HashMap<>();
+        userCollection = new HashMap<>();
+    }
+
+   @Override
+    public void addCard(String name, String type) {
+        cartas.put(name, type);
+        userCollection.put(name, userCollection.getOrDefault(name, 0) + 1);
     }
 
     @Override
-    public void put(K key, V value) {
-        map.put(key, value);
+    public String getCardType(String name) {
+        return cartas.get(name);
     }
 
     @Override
-    public V get(K key) {
-        return map.get(key);
+    public Map<String, Integer> getUserCollection() {
+        return userCollection;
     }
 
     @Override
-    public void remove(K key) {
-        map.remove(key);
+    public List<String> getAllCards() {
+        return new ArrayList<>(cartas.keySet());
     }
 
     @Override
-    public boolean isEmpty() {
-        return map.isEmpty();
+    public List<String> getAllCardsByType() {
+        List<String> sortedCards = new ArrayList<>(cartas.keySet());
+        sortedCards.sort(Comparator.comparing(cartas::get));
+        return sortedCards;
     }
-
-    @Override
-    public void clear() {
-        map.clear();    
-    }
-    
 }
+

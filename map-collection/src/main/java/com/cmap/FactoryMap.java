@@ -1,14 +1,14 @@
 package com.cmap;
 
-public class FactoryMap<K,V> {
-    public IMap<K,V> createMap(String tipo){
+public class FactoryMap  {
+    public IMap createMap(String tipo){
         switch (tipo) {
             case "1":
-                return new cHashMap<K,V>();
+                return new cHashMap();
             case "2":
-                return new cTreeMap<K,V>();
+                return new cTreeMap();
             case "3":
-                return new LinkedHM<K,V>();
+                return new LinkedHM();
             default:
                 return null;
         }
