@@ -17,11 +17,12 @@ public class Main {
         System.out.println("1. HashMap");
         System.out.println("2. TreeMap");
         System.out.println("3. LinkedHashMap");
-        
+
         // Lee la opción del usuario
         int opcion = scanner.nextInt();
         scanner.nextLine(); // Limpiar el buffer
-        
+
+        long inicio = System.nanoTime();
         // Dependiendo de la opción elegida, inicializa el tipo de mapa correspondiente
         switch (opcion) {
             case 1:
@@ -42,6 +43,9 @@ public class Main {
             default:
                 System.out.println("Opción no válida");
         }
+        long fin = System.nanoTime();
+        long tiempoTranscurrido = fin - inicio;
+        System.out.println("Tiempo transcurrido: " + tiempoTranscurrido + " nanosegundos");
     }
 
     public static void inicializarMapa(IMap<String, String> mapa, List<String[]> datos) {
