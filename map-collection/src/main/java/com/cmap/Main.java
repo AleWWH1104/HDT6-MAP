@@ -1,10 +1,6 @@
 package com.cmap;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 public class Main {
 
@@ -22,11 +18,11 @@ public class Main {
         System.out.println("3. LinkedHashMap");
 
         // Lee la opción del usuario
-        String opcion = scanner.nextLine();
+        String opcionMap = scanner.nextLine();
 
         // Utiliza el FactoryMap para crear el tipo de mapa correspondiente
         FactoryMap factoryMap = new FactoryMap();
-        IMap mapa = factoryMap.createMap(opcion);
+        IMap mapa = factoryMap.createMap(opcionMap);
 
         if (mapa == null) {
             System.out.println("Opción no válida");
@@ -74,6 +70,7 @@ public class Main {
                     }
                     break;
                 case "4":
+                    mostrarColeccionOrdenadaPorTipo(mapa);
                     break;
                 case "5":
                     List<String> todasLasCartas = mapa.getAllCards();
@@ -82,6 +79,7 @@ public class Main {
                     }
                     break;
                 case "6":
+                    mostrarTodasLasCartasOrdenadasPorTipo(mapa);
                     break;
                 case "7":
                     salir = true;
@@ -96,6 +94,49 @@ public class Main {
     public static void inicializarMapa(IMap mapa, List<String[]> datos) {
         for (String[] dato : datos) {
             mapa.addCard(dato[0], dato[1]);
+        }
+    }
+
+    public static void mostrarColeccionOrdenadaPorTipo(IMap mapa) {
+        Map<String, Integer> coleccionUsuario = mapa.getUserCollection();
+        List<Map.Entry<String, Integer>> listaOrdenada = new ArrayList<>(coleccionUsuario.entrySet());
+
+        // Definir comparador para ordenar por tipo de carta
+        Collections.sort(listaOrdenada, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> entry1, Map.Entry<String, Integer> entry2) {
+                String tipo1 = mapa.getCardType(entry1.getKey());
+                String tipo2 = mapa.getCardType(entry2.getKey());
+                return tipo1.compareTo(tipo2);
+            }
+        });
+
+        // Imprimir la colección ordenada por tipo
+        for (Map.Entry<String, Integer> entry : listaOrdenada) {
+            String nombreCarta = entry.getKey();
+            String tipoCarta = mapa.getCardType(nombreCarta);
+            int cantidad = entry.getValue();
+            System.out.println("Nombre: " + nombreCarta + ", Tipo: " + tipoCarta + ", Cantidad: " + cantidad);
+        }
+    }
+
+    public static void mostrarTodasLasCartasOrdenadasPorTipo(IMap mapa) {
+        List<String> todasLasCartas = mapa.getAllCards();
+
+        // Ordenar todas las cartas por tipo
+        Collections.sort(todasLasCartas, new Comparator<String>() {
+            @Override
+            public int compare(String carta1, String carta2) {
+                String tipo1 = mapa.getCardType(carta1);
+                String tipo2 = mapa.getCardType(carta2);
+                return tipo1.compareTo(tipo2);
+            }
+        });
+
+        // Imprimir todas las cartas ordenadas por tipo
+        for (String carta : todasLasCartas) {
+            String tipoCarta = mapa.getCardType(carta);
+            System.out.println("Nombre: " + carta + ", Tipo: " + tipoCarta);
         }
     }
 }
