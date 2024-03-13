@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Lee los datos del archivo
-        List<String[]> datos = lector.leerArchivo("map-collection\\src\\main\\java\\com\\cmap\\cards_desc.txt");
+        List<String[]> datos = lector.leerArchivo("C:\\Users\\domin\\OneDrive\\Escritorio\\DHT6\\HDT6-MAP\\map-collection\\src\\main\\java\\com\\cmap\\cards_desc.txt");
 
         // Crea el scanner para la entrada del usuario
         Scanner scanner = new Scanner(System.in);
@@ -19,10 +19,13 @@ public class Main {
 
         // Lee la opción del usuario
         String opcionMap = scanner.nextLine();
+        
+
 
         // Utiliza el FactoryMap para crear el tipo de mapa correspondiente
         FactoryMap factoryMap = new FactoryMap();
         IMap mapa = factoryMap.createMap(opcionMap);
+        
 
         if (mapa == null) {
             System.out.println("Opción no válida");
@@ -33,6 +36,9 @@ public class Main {
 
         // Menú de operaciones para el usuario
         boolean salir = false;
+
+        long tInicio;
+        long tFin;
         while (!salir) {
             System.out.println("Seleccione una opción:");
             System.out.println("1. Agregar una carta a la colección del usuario");
@@ -51,35 +57,53 @@ public class Main {
                     String nombre = scanner.nextLine();
                     System.out.println("Ingrese el tipo de la carta:");
                     String tipo = scanner.nextLine();
+                    tInicio = System.nanoTime();
                     mapa.addCard(nombre, tipo);
+                    tFin = System.nanoTime();
+                    System.out.println("Con: " + mapa.toString() + " T inicio: " + tInicio + " T fin: " + tFin + " Total: " + (tFin-tInicio));
                     break;
                 case "2":
                     System.out.println("Ingrese el nombre de la carta:");
                     String carta = scanner.nextLine();
+                    tInicio = System.nanoTime();
                     String tipoCarta = mapa.getCardType(carta);
                     if (tipoCarta != null) {
                         System.out.println("El tipo de la carta " + carta + " es " + tipoCarta);
                     } else {
                         System.out.println("La carta " + carta + " no existe en la colección.");
                     }
+                    tFin = System.nanoTime();
+                    System.out.println("Con: " + mapa.toString() + " T inicio: " + tInicio + " T fin: " + tFin + " Total: " + (tFin-tInicio));
                     break;
                 case "3":
+                    tInicio = System.nanoTime();
                     Map<String, Integer> coleccionUsuario = mapa.getUserCollection();
                     for (Map.Entry<String, Integer> entry : coleccionUsuario.entrySet()) {
                         System.out.println("Nombre: " + entry.getKey() + ", Tipo: " + mapa.getCardType(entry.getKey()) + ", Cantidad: " + entry.getValue());
                     }
+                    tFin = System.nanoTime();
+                    System.out.println("Con: " + mapa.toString() + " T inicio: " + tInicio + " T fin: " + tFin + " Total: " + (tFin-tInicio));
                     break;
                 case "4":
+                    tInicio = System.nanoTime();
                     mostrarColeccionOrdenadaPorTipo(mapa);
+                    tFin = System.nanoTime();
+                    System.out.println("Con: " + mapa.toString() + " T inicio: " + tInicio + " T fin: " + tFin + " Total: " + (tFin-tInicio));
                     break;
                 case "5":
+                    tInicio = System.nanoTime();
                     List<String> todasLasCartas = mapa.getAllCards();
                     for (String cartaNombre : todasLasCartas) {
                         System.out.println("Nombre: " + cartaNombre + ", Tipo: " + mapa.getCardType(cartaNombre));
                     }
+                    tFin = System.nanoTime();
+                    System.out.println("Con: " + mapa.toString() + " T inicio: " + tInicio + " T fin: " + tFin + " Total: " + (tFin-tInicio));
                     break;
                 case "6":
+                    tInicio = System.nanoTime();
                     mostrarTodasLasCartasOrdenadasPorTipo(mapa);
+                    tFin = System.nanoTime();
+                    System.out.println("Con: " + mapa.toString() + " T inicio: " + tInicio + " T fin: " + tFin + " Total: " + (tFin-tInicio));
                     break;
                 case "7":
                     salir = true;
